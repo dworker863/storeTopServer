@@ -21,4 +21,10 @@ export class UsersService {
     const user = await this.userRepository.findOne({ where: { email } });
     return user;
   }
+
+  async getUserByTel(tel: string) {
+    const user = await this.userRepository.findOne({ where: { tel } });
+    console.log(user);
+    return user;
+  }
 }
