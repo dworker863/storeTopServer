@@ -1,9 +1,13 @@
 export interface IUser {
   username: string;
-  tel: string;
   email: string;
   password: string;
-  address: string;
+  phone: string;
+  city: string;
+  street: string;
+  houseNumber: string;
+  floor: string;
+  flatNumber: string;
   postIndex: string;
   role: 'Admin' | 'User';
 }

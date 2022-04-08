@@ -1,9 +1,13 @@
 export class CreateUserDto {
   readonly username: string;
-  readonly tel: string;
   readonly email: string;
   readonly password: string;
-  readonly address: string;
+  readonly phone: string;
+  readonly city: string;
+  readonly street: string;
+  readonly houseNumber: string;
+  readonly floor: string;
+  readonly flatNumber: string;
   readonly postIndex: string;
   readonly role: 'Admin' | 'User';
 }

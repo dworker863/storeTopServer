@@ -22,8 +22,8 @@ export class UsersService {
     return user;
   }
 
-  async getUserByTel(tel: string) {
-    const user = await this.userRepository.findOne({ where: { tel } });
+  async getUserByTel(phone: string) {
+    const user = await this.userRepository.findOne({ where: { phone } });
     console.log(user);
     return user;
   }

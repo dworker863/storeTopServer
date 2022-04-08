@@ -15,20 +15,32 @@ export class User extends Model<User, IUser> {
   username: string;
 
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
-  tel: string;
-
-  @Column({ type: DataType.STRING, unique: true, allowNull: false })
   email: string;
 
   @Column({ type: DataType.STRING, allowNull: false })
   password: string;
 
-  @Column({ type: DataType.STRING, allowNull: false })
-  role: 'Admin' | 'User';
+  @Column({ type: DataType.STRING, unique: true, allowNull: false })
+  phone: string;
 
   @Column({ type: DataType.STRING, allowNull: true })
-  address: string;
+  city: string;
+
+  @Column({ type: DataType.STRING, allowNull: true })
+  street: string;
+
+  @Column({ type: DataType.STRING, allowNull: true })
+  houseNumber: string;
+
+  @Column({ type: DataType.STRING, allowNull: true })
+  floor: string;
+
+  @Column({ type: DataType.STRING, allowNull: true })
+  flatNumber: string;
 
   @Column({ type: DataType.STRING, allowNull: true })
   postIndex: string;
+
+  @Column({ type: DataType.STRING, allowNull: false })
+  role: 'Admin' | 'User';
 }

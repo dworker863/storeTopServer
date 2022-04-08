@@ -33,7 +33,7 @@ export class AuthService {
       );
     }
 
-    const userByTel = await this.userService.getUserByTel(userDto.tel);
+    const userByTel = await this.userService.getUserByTel(userDto.phone);
 
     if (userByTel) {
       throw new HttpException(
@@ -56,25 +56,31 @@ export class AuthService {
     const user = await this.userService.getUserByEmail(userDto.email);
     console.log(user);
 
-    // const passwordEquals = await bcrypt.compare(
-    //   userDto.password,
-    //   user.password,
-    // );
+    const passwordEquals = await bcrypt.compare(
+      userDto.password,
+      user.password,
+    );
 
-    // if (user && passwordEquals) {
-    return user;
-    // }
-    // throw new UnauthorizedException({
-    //   message: 'Неверный email или пароль',
-    // });
+    if (user && passwordEquals) {
+      return user;
+    }
+    throw new UnauthorizedException({
+      message: 'Неверный email или пароль',
+    });
   }
 
   private async generateToken(user: User) {
     const payload = {
       id: user.id,
       username: user.username,
-      tel: user.tel,
       email: user.email,
+      phone: user.phone,
+      city: user.city,
+      street: user.street,
+      houseNumber: user.houseNumber,
+      floor: user.floor,
+      flatNumber: user.flatNumber,
+      postIndex: user.postIndex,
       role: user.role,
     };
 
