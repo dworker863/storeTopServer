@@ -17,6 +17,9 @@ export class Cosmetics extends Model<Cosmetics, IGood> {
   @Column({ type: DataType.STRING, allowNull: false })
   description: string;
 
+  @Column({ type: DataType.STRING, allowNull: true })
+  characteristics: string;
+
   @Column({ type: DataType.STRING, allowNull: false })
   price: string;
 

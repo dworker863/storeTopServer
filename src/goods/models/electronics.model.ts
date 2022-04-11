@@ -17,6 +17,9 @@ export class Electronics extends Model<Electronics, IGood> {
   @Column({ type: DataType.STRING, allowNull: false })
   description: string;
 
+  @Column({ type: DataType.STRING, allowNull: true })
+  characteristics: string;
+
   @Column({ type: DataType.STRING, allowNull: false })
   price: string;
 
