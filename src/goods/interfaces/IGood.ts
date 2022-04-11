@@ -5,4 +5,5 @@ export interface IGood {
   price: string;
   discount: string;
   hit: boolean;
+  image: any;
 }

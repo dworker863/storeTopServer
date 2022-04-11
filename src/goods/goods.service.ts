@@ -1,4 +1,5 @@
-import { CreateGoodDto } from './dto/create-cosmetics.dto';
+import { FilesService } from './../files/files.service';
+import { CreateGoodDto } from './dto/create-good.dto';
 import { Cosmetics } from './models/cosmetics.model';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
@@ -9,6 +10,7 @@ export class GoodsService {
   constructor(
     @InjectModel(Cosmetics) private cosmeticsRepository: typeof Cosmetics,
     @InjectModel(Electronics) private electronicsRepository: typeof Electronics,
+    private FilesService: FilesService,
   ) {}
 
   async getAllGoods() {
@@ -17,13 +19,22 @@ export class GoodsService {
     return { cosmetics, electronics };
   }
 
-  async createCosmetic(dto: CreateGoodDto) {
-    const cosmetics = await this.cosmeticsRepository.create(dto);
+  async createCosmetic(dto: CreateGoodDto, image: any) {
+    const fileName = await this.FilesService.createFile(image);
+    const cosmetics = await this.cosmeticsRepository.create({
+      ...dto,
+      image: 'http://localhost:5000/' + fileName,
+    });
     return cosmetics;
   }
 
-  async createElectronic(dto: CreateGoodDto) {
-    const cosmetics = await this.electronicsRepository.create(dto);
-    return cosmetics;
+  async createElectronic(dto: CreateGoodDto, image: any) {
+    const fileName = await this.FilesService.createFile(image);
+
+    const electronics = await this.electronicsRepository.create({
+      ...dto,
+      image: 'http://localhost:5000/' + fileName,
+    });
+    return electronics;
   }
 }

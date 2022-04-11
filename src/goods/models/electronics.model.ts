@@ -28,4 +28,7 @@ export class Electronics extends Model<Electronics, IGood> {
 
   @Column({ type: DataType.BOOLEAN, allowNull: false })
   hit: true;
+
+  @Column({ type: DataType.STRING, allowNull: false })
+  image: string;
 }

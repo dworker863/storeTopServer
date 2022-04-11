@@ -5,4 +5,5 @@ export class CreateGoodDto {
   readonly price: string;
   readonly discount: string;
   readonly hit: boolean;
+  readonly image: any;
 }

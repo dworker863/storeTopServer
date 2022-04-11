@@ -1,6 +1,14 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { GoodsService } from './goods.service';
-import { CreateGoodDto } from './dto/create-cosmetics.dto';
+import { CreateGoodDto } from './dto/create-good.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('goods')
 export class GoodsController {
@@ -12,12 +20,19 @@ export class GoodsController {
   }
 
   @Post('/cosmetics')
-  async postCosmetic(@Body() CosmeticsDto: CreateGoodDto) {
-    return this.goodsService.createCosmetic(CosmeticsDto);
+  @UseInterceptors(FileInterceptor('image'))
+  async postCosmetic(
+    @Body() CosmeticsDto: CreateGoodDto,
+    @UploadedFile() image,
+  ) {
+    return this.goodsService.createCosmetic(CosmeticsDto, image);
   }
 
   @Post('/electronics')
-  async postElectronic(@Body() ElectronicsDto: CreateGoodDto) {
-    return this.goodsService.createElectronic(ElectronicsDto);
+  async postElectronic(
+    @Body() ElectronicsDto: CreateGoodDto,
+    @UploadedFile() image,
+  ) {
+    return this.goodsService.createElectronic(ElectronicsDto, image);
   }
 }
