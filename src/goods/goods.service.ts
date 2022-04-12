@@ -10,7 +10,7 @@ export class GoodsService {
   constructor(
     @InjectModel(Cosmetics) private cosmeticsRepository: typeof Cosmetics,
     @InjectModel(Electronics) private electronicsRepository: typeof Electronics,
-    private FilesService: FilesService,
+    private filesService: FilesService,
   ) {}
 
   async getAllGoods() {
@@ -20,7 +20,7 @@ export class GoodsService {
   }
 
   async createCosmetic(dto: CreateGoodDto, image: any) {
-    const fileName = await this.FilesService.createFile(image);
+    const fileName = await this.filesService.createFile(image);
     const cosmetics = await this.cosmeticsRepository.create({
       ...dto,
       image: 'http://localhost:5000/' + fileName,
@@ -29,12 +29,14 @@ export class GoodsService {
   }
 
   async createElectronic(dto: CreateGoodDto, image: any) {
-    const fileName = await this.FilesService.createFile(image);
+    const fileName = await this.filesService.createFile(image);
+    console.log(fileName);
 
     const electronics = await this.electronicsRepository.create({
       ...dto,
       image: 'http://localhost:5000/' + fileName,
     });
+
     return electronics;
   }
 }

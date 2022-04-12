@@ -20,6 +20,9 @@ export class Cosmetics extends Model<Cosmetics, IGood> {
   @Column({ type: DataType.STRING, allowNull: true })
   characteristics: string;
 
+  @Column({ type: DataType.STRING, allowNull: true })
+  country: string;
+
   @Column({ type: DataType.STRING, allowNull: false })
   price: string;
 
@@ -28,4 +31,7 @@ export class Cosmetics extends Model<Cosmetics, IGood> {
 
   @Column({ type: DataType.BOOLEAN, allowNull: false })
   hit: true;
+
+  @Column({ type: DataType.STRING, allowNull: false })
+  image: string;
 }

@@ -12,6 +12,10 @@ export class FilesService {
       fileName = uuid.v4() + '.jpg';
     }
 
+    if (file.originalname.slice(-3) === 'png') {
+      fileName = uuid.v4() + '.png';
+    }
+
     if (file.originalname.slice(-3) === 'svg') {
       fileName = uuid.v4() + '.svg';
     }

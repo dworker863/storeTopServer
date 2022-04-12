@@ -9,6 +9,7 @@ import {
 import { GoodsService } from './goods.service';
 import { CreateGoodDto } from './dto/create-good.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { IGood } from './interfaces/IGood';
 
 @Controller('goods')
 export class GoodsController {
@@ -24,15 +25,17 @@ export class GoodsController {
   async postCosmetic(
     @Body() CosmeticsDto: CreateGoodDto,
     @UploadedFile() image,
-  ) {
+  ): Promise<IGood> {
     return this.goodsService.createCosmetic(CosmeticsDto, image);
   }
 
   @Post('/electronics')
+  @UseInterceptors(FileInterceptor('image'))
   async postElectronic(
     @Body() ElectronicsDto: CreateGoodDto,
     @UploadedFile() image,
   ) {
+    console.log(image);
     return this.goodsService.createElectronic(ElectronicsDto, image);
   }
 }
