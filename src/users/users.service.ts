@@ -17,6 +17,13 @@ export class UsersService {
     return user;
   }
 
+  async updateUser(id, dto: CreateUserDto) {
+    const result = await this.userRepository.update(dto, { where: { id } });
+    const user = await this.userRepository.findOne({ where: { id: id } });
+
+    return user;
+  }
+
   async getUserByEmail(email: string) {
     const user = await this.userRepository.findOne({ where: { email } });
     return user;
