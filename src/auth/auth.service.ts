@@ -52,7 +52,7 @@ export class AuthService {
     return { ...user, token };
   }
 
-  private async validateUser(userDto: CreateUserDto) {
+  async validateUser(userDto: CreateUserDto) {
     const user = await this.userService.getUserByEmail(userDto.email);
     console.log(user);
 
