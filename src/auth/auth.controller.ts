@@ -6,9 +6,12 @@ import {
   Get,
   Post,
   Request,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('auth')
 export class AuthController {
@@ -26,7 +29,8 @@ export class AuthController {
   }
 
   @Post('/registration')
-  async registration(@Body() userDto: CreateUserDto) {
-    return this.authService.registration(userDto);
+  @UseInterceptors(FileInterceptor('image'))
+  async registration(@Body() userDto: CreateUserDto, @UploadedFile() image) {
+    return this.authService.registration(userDto, image);
   }
 }

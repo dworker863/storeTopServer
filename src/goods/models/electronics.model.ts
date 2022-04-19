@@ -34,4 +34,7 @@ export class Electronics extends Model<Electronics, IGood> {
 
   @Column({ type: DataType.STRING, allowNull: false })
   image: string;
+
+  @Column({ type: DataType.NUMBER, allowNull: false, defaultValue: 5 })
+  rating: number;
 }

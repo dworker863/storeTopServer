@@ -43,4 +43,7 @@ export class User extends Model<User, IUser> {
 
   @Column({ type: DataType.STRING, allowNull: false })
   role: 'Admin' | 'User';
+
+  @Column({ type: DataType.STRING, allowNull: true })
+  image: string;
 }

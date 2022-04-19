@@ -1,5 +1,6 @@
+import { FilesService } from 'src/files/files.service';
 import * as bcrypt from 'bcryptjs';
-import { CreateUserDto } from './../users/dto/create-user.dto';
+import { CreateUserDto } from '../users/dto/create-user.dto';
 import { UsersService } from './../users/users.service';
 import {
   HttpException,
@@ -15,6 +16,7 @@ export class AuthService {
   constructor(
     private userService: UsersService,
     private jwtService: JwtService,
+    private fileService: FilesService,
   ) {}
 
   async login(userDto: CreateUserDto) {
@@ -23,7 +25,7 @@ export class AuthService {
     return { ...user, token };
   }
 
-  async registration(userDto: CreateUserDto) {
+  async registration(userDto: CreateUserDto, image: any) {
     const userByEmail = await this.userService.getUserByEmail(userDto.email);
 
     if (userByEmail) {
@@ -43,10 +45,13 @@ export class AuthService {
     }
 
     const hashPassword = await bcrypt.hash(userDto.password, 5);
-    const user = await this.userService.createUser({
-      ...userDto,
-      password: hashPassword,
-    });
+    const user = await this.userService.createUser(
+      {
+        ...userDto,
+        password: hashPassword,
+      },
+      image,
+    );
 
     const token = await this.generateToken(user);
     return { ...user, token };

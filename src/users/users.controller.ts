@@ -1,5 +1,15 @@
+import { FileInterceptor } from '@nestjs/platform-express';
 import { UsersService } from './users.service';
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { IUser } from './interfaces/user.interface';
 import { CreateUserDto } from './dto/create-user.dto';
 
@@ -13,12 +23,18 @@ export class UsersController {
   }
 
   @Post()
-  async create(@Body() userDto: CreateUserDto): Promise<IUser> {
-    return this.usersService.createUser(userDto);
+  @UseInterceptors(FileInterceptor('image'))
+  async create(@Body() userDto: CreateUserDto, @UploadedFile() image) {
+    return this.usersService.createUser(userDto, image);
   }
 
   @Put('/:userId')
-  async update(@Param('userId') id: string, @Body() userDto: CreateUserDto) {
-    return this.usersService.updateUser(id, userDto);
+  @UseInterceptors(FileInterceptor('image'))
+  async update(
+    @Param('userId') id: string,
+    @Body() userDto: CreateUserDto,
+    @UploadedFile() image,
+  ) {
+    return this.usersService.updateUser(id, userDto, image);
   }
 }

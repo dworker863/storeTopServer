@@ -1,3 +1,4 @@
+import { FilesModule } from 'src/files/files.module';
 import { UsersModule } from './../users/users.module';
 import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
@@ -12,6 +13,7 @@ import { JwtStrategy } from './jwt.strategy';
   imports: [
     UsersModule,
     PassportModule,
+    FilesModule,
     JwtModule.register({
       secret: 'SECRET',
       signOptions: {

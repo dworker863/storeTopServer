@@ -9,5 +9,4 @@ export class CreateUserDto {
   readonly floor: string;
   readonly flatNumber: string;
   readonly postIndex: string;
-  readonly role: 'Admin' | 'User';
 }

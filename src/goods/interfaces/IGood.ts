@@ -7,4 +7,5 @@ export interface IGood {
   discount: string;
   hit: boolean;
   image: string;
+  rating: number;
 }
