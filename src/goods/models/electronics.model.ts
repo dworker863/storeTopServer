@@ -35,6 +35,12 @@ export class Electronics extends Model<Electronics, IGood> {
   @Column({ type: DataType.STRING, allowNull: false })
   image: string;
 
-  @Column({ type: DataType.NUMBER, allowNull: false, defaultValue: 5 })
-  rating: number;
+  @Column({
+    type: DataType.ARRAY(DataType.INTEGER),
+    allowNull: true,
+  })
+  rating: number[];
+
+  @Column({ type: DataType.NUMBER, allowNull: false, defaultValue: 0 })
+  buysCount: number;
 }

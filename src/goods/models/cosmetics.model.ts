@@ -1,5 +1,6 @@
 import { IGood } from '../interfaces/IGood';
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { INTEGER } from 'sequelize/types';
 
 @Table({ tableName: 'cosmetics' })
 export class Cosmetics extends Model<Cosmetics, IGood> {
@@ -35,6 +36,13 @@ export class Cosmetics extends Model<Cosmetics, IGood> {
   @Column({ type: DataType.STRING, allowNull: false })
   image: string;
 
-  @Column({ type: DataType.NUMBER, allowNull: false, defaultValue: 5 })
-  rating: number;
+  @Column({
+    type: DataType.ARRAY(DataType.INTEGER),
+    allowNull: false,
+    defaultValue: [5],
+  })
+  rating: number[];
+
+  @Column({ type: DataType.NUMBER, allowNull: false, defaultValue: 0 })
+  buysCount: number;
 }

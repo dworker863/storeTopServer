@@ -3,8 +3,8 @@ import { UsersService } from './users.service';
 import {
   Body,
   Controller,
-  Get,
   Param,
+  Get,
   Post,
   Put,
   UploadedFile,
@@ -36,5 +36,13 @@ export class UsersController {
     @UploadedFile() image,
   ) {
     return this.usersService.updateUser(id, userDto, image);
+  }
+
+  @Post('/viewed')
+  async addGoods(@Body() userGoods: { email: string; goodName: string }) {
+    return this.usersService.addViewedGoods(
+      userGoods.email,
+      userGoods.goodName,
+    );
   }
 }

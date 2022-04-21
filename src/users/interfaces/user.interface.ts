@@ -11,4 +11,5 @@ export interface IUser {
   postIndex: string;
   role: 'Admin' | 'User';
   image: string;
+  lastViewedGoods: string[];
 }

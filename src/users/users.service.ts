@@ -37,6 +37,23 @@ export class UsersService {
     return users;
   }
 
+  async addViewedGoods(email: string, goodName: string) {
+    console.log(goodName);
+
+    const user = await this.getUserByEmail(email);
+
+    if (user.lastViewedGoods.some((good) => good !== goodName)) {
+      const updatedUser = await this.userRepository.update(
+        {
+          lastViewedGoods: [goodName, ...user.lastViewedGoods].slice(0, 5),
+        },
+        { where: { email } },
+      );
+
+      return updatedUser;
+    }
+  }
+
   async getUserByEmail(email: string) {
     const user = await this.userRepository.findOne({ where: { email } });
     return user;

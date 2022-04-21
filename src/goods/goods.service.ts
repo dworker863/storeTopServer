@@ -16,6 +16,8 @@ export class GoodsService {
   async getAllGoods() {
     const cosmetics = await this.cosmeticsRepository.findAll();
     const electronics = await this.electronicsRepository.findAll();
+    // console.log(electronics);
+
     return { cosmetics, electronics };
   }
 
@@ -30,7 +32,7 @@ export class GoodsService {
 
   async createElectronic(dto: CreateGoodDto, image: any) {
     const fileName = await this.filesService.createFile(image);
-    console.log(fileName);
+    // console.log(fileName);
 
     const electronics = await this.electronicsRepository.create({
       ...dto,
@@ -38,5 +40,27 @@ export class GoodsService {
     });
 
     return electronics;
+  }
+
+  async updateCosmiticsRating(id: string, rating: number) {
+    const cosmetics = await this.cosmeticsRepository.findByPk(Number(id));
+    const updatedCosmetics = await this.cosmeticsRepository.update(
+      { rating: [...cosmetics.rating, rating] },
+      { where: { id } },
+    );
+
+    return updatedCosmetics;
+  }
+
+  async updateElectronicsRating(id: string, rating: number) {
+    const cosmetics = await this.electronicsRepository.findByPk(Number(id));
+    console.log(cosmetics);
+
+    const updatedCosmetics = await this.electronicsRepository.update(
+      { rating: [...cosmetics.rating, rating] },
+      { where: { id } },
+    );
+
+    return updatedCosmetics;
   }
 }

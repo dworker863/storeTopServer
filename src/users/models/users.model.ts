@@ -46,4 +46,11 @@ export class User extends Model<User, IUser> {
 
   @Column({ type: DataType.STRING, allowNull: true })
   image: string;
+
+  @Column({
+    type: DataType.ARRAY(DataType.STRING),
+    allowNull: false,
+    defaultValue: [],
+  })
+  lastViewedGoods: string[];
 }

@@ -1,8 +1,12 @@
+import { Electronics } from './models/electronics.model';
+import { Cosmetics } from './models/cosmetics.model';
 import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
+  Put,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -25,7 +29,7 @@ export class GoodsController {
   async postCosmetic(
     @Body() CosmeticsDto: CreateGoodDto,
     @UploadedFile() image,
-  ): Promise<IGood> {
+  ): Promise<any> {
     return this.goodsService.createCosmetic(CosmeticsDto, image);
   }
 
@@ -37,5 +41,21 @@ export class GoodsController {
   ) {
     console.log(image);
     return this.goodsService.createElectronic(ElectronicsDto, image);
+  }
+
+  @Put('/cosmetics/rating/:goodId')
+  async changeCosmeticsRating(
+    @Param('goodId') id: string,
+    @Body() rating: { rating: number },
+  ) {
+    return this.goodsService.updateCosmiticsRating(id, rating.rating);
+  }
+
+  @Put('/electronics/rating/:goodId')
+  async changeElectronicsRating(
+    @Param('goodId') id: string,
+    @Body() rating: { rating: number },
+  ) {
+    return this.goodsService.updateElectronicsRating(id, rating.rating);
   }
 }
