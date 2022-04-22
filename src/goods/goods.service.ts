@@ -45,7 +45,9 @@ export class GoodsService {
   }
 
   async updateCosmiticsRating(id: string, rating: number, userEmail: string) {
-    const good = await this.electronicsRepository.findByPk(id);
+    const good = await this.cosmeticsRepository.findByPk(id);
+
+    console.log(good.voitedUsers);
 
     if (good.voitedUsers.some((user) => user === userEmail)) {
       throw new HttpException(
@@ -75,16 +77,16 @@ export class GoodsService {
         HttpStatus.BAD_REQUEST,
       );
     } else {
-      const cosmetics = await this.electronicsRepository.findByPk(Number(id));
-      const updatedCosmetics = await this.electronicsRepository.update(
+      const electronics = await this.electronicsRepository.findByPk(Number(id));
+      const updatedElectronics = await this.electronicsRepository.update(
         {
-          rating: [...cosmetics.rating, rating],
+          rating: [...electronics.rating, rating],
           voitedUsers: [...good.voitedUsers, userEmail],
         },
         { where: { id } },
       );
 
-      return updatedCosmetics;
+      return updatedElectronics;
     }
   }
 }
