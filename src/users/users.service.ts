@@ -28,13 +28,24 @@ export class UsersService {
   }
 
   async updateUser(id, dto: CreateUserDto, image: any) {
-    const fileName = image && (await this.fileService.createFile(image));
-    const result = await this.userRepository.update(
-      { ...dto, image: 'http://localhost:5000/' + fileName },
-      { where: { id } },
-    );
-    const users = this.getAllUsers();
-    return users;
+    const fileName =
+      typeof image !== 'string' && (await this.fileService.createFile(image));
+
+    if (fileName) {
+      const result = await this.userRepository.update(
+        { ...dto, image: 'http://localhost:5000/' + fileName },
+        { where: { id } },
+      );
+      const users = this.getAllUsers();
+      return users;
+    } else {
+      const result = await this.userRepository.update(
+        { ...dto, image: 'http://localhost:5000/' + image },
+        { where: { id } },
+      );
+      const users = this.getAllUsers();
+      return users;
+    }
   }
 
   async addViewedGoods(email: string, goodName: string) {
