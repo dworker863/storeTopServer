@@ -7,6 +7,7 @@ import {
   Get,
   Post,
   Put,
+  Delete,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -52,5 +53,13 @@ export class UsersController {
     @Body() favorite: { favorite: string },
   ) {
     return this.usersService.addGoodToFavorite(id, favorite.favorite);
+  }
+
+  @Delete('/:userId/favorites')
+  async removeFavorite(
+    @Param('userId') id: string,
+    @Body() favorite: { favorite: string },
+  ) {
+    return this.usersService.removeGoodFromFavorite(id, favorite.favorite);
   }
 }

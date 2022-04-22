@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcryptjs';
 import { CreateUserDto } from './dto/create-user.dto';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './models/users.model';
 import { FilesService } from 'src/files/files.service';
@@ -74,7 +74,7 @@ export class UsersService {
       );
 
       return updateFavorite;
-    } else {
+    } else if (user.favorites.every((goodName) => goodName !== favorite)) {
       const updateFavorite = await this.userRepository.update(
         {
           favorites: [favorite, ...user.favorites],
@@ -83,7 +83,25 @@ export class UsersService {
       );
 
       return updateFavorite;
+    } else {
+      throw new HttpException(
+        'Товар уже присутствует в избранных',
+        HttpStatus.BAD_REQUEST,
+      );
     }
+  }
+
+  async removeGoodFromFavorite(id: string, favorite: string) {
+    const user = await this.userRepository.findByPk(id);
+
+    const updateFavorite = await this.userRepository.update(
+      {
+        favorites: user.favorites.filter((goodName) => goodName !== favorite),
+      },
+      { where: { id } },
+    );
+
+    return updateFavorite;
   }
 
   async getUserByEmail(email: string) {
