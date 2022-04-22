@@ -45,4 +45,12 @@ export class UsersController {
       userGoods.goodName,
     );
   }
+
+  @Post('/:userId/favorites')
+  async addFavorite(
+    @Param('userId') id: string,
+    @Body() favorite: { favorite: string },
+  ) {
+    return this.usersService.addGoodToFavorite(id, favorite.favorite);
+  }
 }

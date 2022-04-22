@@ -12,4 +12,5 @@ export interface IUser {
   role: 'Admin' | 'User';
   image: string;
   lastViewedGoods: string[];
+  favorites: string[];
 }

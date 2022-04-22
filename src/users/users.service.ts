@@ -38,11 +38,19 @@ export class UsersService {
   }
 
   async addViewedGoods(email: string, goodName: string) {
-    console.log(goodName);
-
     const user = await this.getUserByEmail(email);
 
-    if (user.lastViewedGoods.some((good) => good !== goodName)) {
+    if (user.lastViewedGoods.length === 0) {
+      console.log(goodName);
+      const updatedUser = await this.userRepository.update(
+        {
+          lastViewedGoods: [goodName],
+        },
+        { where: { email } },
+      );
+
+      return updatedUser;
+    } else if (user.lastViewedGoods.some((good) => good !== goodName)) {
       const updatedUser = await this.userRepository.update(
         {
           lastViewedGoods: [goodName, ...user.lastViewedGoods].slice(0, 5),
@@ -51,6 +59,30 @@ export class UsersService {
       );
 
       return updatedUser;
+    }
+  }
+
+  async addGoodToFavorite(id: string, favorite: string) {
+    const user = await this.userRepository.findByPk(id);
+
+    if (user.favorites.length === 0) {
+      const updateFavorite = await this.userRepository.update(
+        {
+          favorites: [favorite],
+        },
+        { where: { id } },
+      );
+
+      return updateFavorite;
+    } else {
+      const updateFavorite = await this.userRepository.update(
+        {
+          favorites: [favorite, ...user.favorites],
+        },
+        { where: { id } },
+      );
+
+      return updateFavorite;
     }
   }
 

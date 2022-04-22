@@ -53,4 +53,10 @@ export class User extends Model<User, IUser> {
     defaultValue: [],
   })
   lastViewedGoods: string[];
+  @Column({
+    type: DataType.ARRAY(DataType.STRING),
+    allowNull: true,
+    defaultValue: [],
+  })
+  favorites: string[];
 }
