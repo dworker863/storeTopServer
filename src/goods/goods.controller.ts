@@ -46,16 +46,24 @@ export class GoodsController {
   @Put('/cosmetics/rating/:goodId')
   async changeCosmeticsRating(
     @Param('goodId') id: string,
-    @Body() rating: { rating: number },
+    @Body() data: { rating: number; userEmail: string },
   ) {
-    return this.goodsService.updateCosmiticsRating(id, rating.rating);
+    return this.goodsService.updateCosmiticsRating(
+      id,
+      data.rating,
+      data.userEmail,
+    );
   }
 
   @Put('/electronics/rating/:goodId')
   async changeElectronicsRating(
     @Param('goodId') id: string,
-    @Body() rating: { rating: number },
+    @Body() data: { rating: number; userEmail: string },
   ) {
-    return this.goodsService.updateElectronicsRating(id, rating.rating);
+    return this.goodsService.updateElectronicsRating(
+      id,
+      data.rating,
+      data.userEmail,
+    );
   }
 }

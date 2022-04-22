@@ -43,4 +43,11 @@ export class Electronics extends Model<Electronics, IGood> {
 
   @Column({ type: DataType.NUMBER, allowNull: false, defaultValue: 0 })
   buysCount: number;
+
+  @Column({
+    type: DataType.ARRAY(DataType.STRING),
+    allowNull: false,
+    defaultValue: [],
+  })
+  voitedUsers: string[];
 }

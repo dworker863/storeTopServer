@@ -45,4 +45,11 @@ export class Cosmetics extends Model<Cosmetics, IGood> {
 
   @Column({ type: DataType.NUMBER, allowNull: false, defaultValue: 0 })
   buysCount: number;
+
+  @Column({
+    type: DataType.ARRAY(DataType.STRING),
+    allowNull: false,
+    defaultValue: [],
+  })
+  voitedUsers: string[];
 }
